@@ -6,7 +6,7 @@ from document_processor import DocumentProcessor
 
 load_dotenv()
 client = OpenAI()
-processor = DocumentProcessor(chunk_size=100, overlap=20)
+processor = DocumentProcessor()
 
 sample_text = """
 The cat sits on the mat.
