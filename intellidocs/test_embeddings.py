@@ -2,22 +2,26 @@ import numpy as np
 from openai import OpenAI
 import os
 from dotenv import load_dotenv
+from document_processor import DocumentProcessor
 
 load_dotenv()
 client = OpenAI()
+processor = DocumentProcessor(chunk_size=100, overlap=20)
 
-sentences = [
-    "Python is a programming language",
-    "Java is a programming language",
-    "Feline resting on carpet"
-]
+sample_text = """
+The cat sits on the mat.
+A dog is playing in the park.
+A carpet lies under the sleeping feline.
+"""
+
+chunks = processor.split_text(sample_text)
 
 embeddings = []
 
-for sentence in sentences:
+for chunk in chunks:
     response = client.embeddings.create(
         model="text-embedding-3-small",
-        input=sentence
+        input=chunk
     )
     embeddings.append(response.data[0].embedding)
 
